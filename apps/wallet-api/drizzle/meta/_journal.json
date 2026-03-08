@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1772995400314,
+      "tag": "0000_acoustic_captain_flint",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1772996361255,
+      "tag": "0001_silly_sway",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1772996634001,
+      "tag": "0002_hesitant_phantom_reporter",
+      "breakpoints": true
+    }
+  ]
+}
