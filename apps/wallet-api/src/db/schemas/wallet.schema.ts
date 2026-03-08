@@ -1,8 +1,8 @@
 import { sql } from 'drizzle-orm';
 import { int, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
-export const walletsTable = sqliteTable("wallets", {
-    id: int().primaryKey({}),
+export const wallets = sqliteTable("wallets", {
+    id: int().primaryKey({ autoIncrement: true }),
     name: text("name").notNull(),
     description: text(),
     createdAt: text("created_at")
