@@ -9,7 +9,7 @@
   "dependencies": {
     "elysia": "latest",
     "@mono-dev/drizzle": "workspace:*",
-    "@mono-dev/@types": "workspace:*"
+    "@mono-dev/types": "workspace:*"
   },
   "devDependencies": {
     "bun-types": "latest",

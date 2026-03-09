@@ -8,11 +8,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "workspaces": [
-    "app/*",
+    "apps/*",
     "packages/*"
   ],
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.15.1"
+  "packageManager": "bun@1.2.0"
 }

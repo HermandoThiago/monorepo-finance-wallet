@@ -1,5 +1,5 @@
 {
-  "name": "@mono-dev/@types",
+  "name": "@mono-dev/types",
   "version": "1.0.0",
   "exports": {
     ".": "./src/index.ts"
@@ -9,7 +9,6 @@
   },
   "author": "@HermandoThiago",
   "license": "ISC",
-  "packageManager": "pnpm@10.15.1",
   "dependencies": {
     "drizzle-orm": "^0.45.1",
     "@mono-dev/drizzle": "workspace:*"

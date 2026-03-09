@@ -14,7 +14,6 @@
   "keywords": [],
   "author": "Hermando Thiago",
   "license": "ISC",
-  "packageManager": "pnpm@10.15.1",
   "dependencies": {
     "dotenv": "^17.3.1",
     "drizzle-orm": "^0.45.1"
