@@ -4,19 +4,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "bun run --watch src/index.ts",
-    "start:build": "bun run build && bun run start",
-    "db:generate:migration": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
-    "db:studio": "drizzle-kit studio"
+    "start:build": "bun run build && bun run start"
   },
   "dependencies": {
-    "dotenv": "^17.3.1",
-    "drizzle-orm": "^0.45.1",
-    "elysia": "latest"
+    "elysia": "latest",
+    "@mono-dev/drizzle": "workspace:*"
   },
   "devDependencies": {
     "bun-types": "latest",
-    "drizzle-kit": "^0.31.9",
     "tsx": "^4.21.0"
   },
   "module": "src/index.js"
