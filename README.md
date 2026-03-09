@@ -1,10 +1,10 @@
 # Monorepo Finance Wallet
 
-Gerenciador de carteiras de investimento com geração automatizada de relatórios via IA. Um worker da Cloudflare executa diariamente às 10h, coleta as últimas notícias do mercado via Perplexity e gera um resumo personalizado para cada carteira cadastrada.
+Gerenciador de carteiras de investimento com geração automatizada de relatórios via IA. Um worker da Cloudflare (a ser desenvolvido) executará diariamente às 10h, coletará as últimas notícias do mercado via Perplexity e gerará um resumo personalizado para cada carteira cadastrada.
 
 ## Visão Geral
 
-O sistema permite cadastrar múltiplas carteiras de investimento, cada uma contendo seus ativos (ações, criptomoedas, etc.). Diariamente, um worker automatizado busca notícias relevantes e, utilizando o Perplexity, gera relatórios contextualizados para cada carteira. Os metadados de uso da IA (tokens consumidos, modelo utilizado) são armazenados para controle de custos.
+O sistema permite cadastrar múltiplas carteiras de investimento, cada uma contendo seus ativos (ações, criptomoedas, etc.). Diariamente, um worker automatizado buscará notícias relevantes e, utilizando o Perplexity, gerará relatórios contextualizados para cada carteira. Os metadados de uso da IA (tokens consumidos, modelo utilizado) serão armazenados para controle de custos.
 
 ### Fluxo Principal
 
@@ -29,16 +29,24 @@ Carteiras → Ativos → Worker (10h diário) → Perplexity (notícias + resumo
 ```
 mono-dev/
 ├── apps/
-│   └── wallet-api/          # API principal (Elysia + Cloudflare Workers)
-│       ├── src/
-│       │   ├── index.ts     # Entry point da aplicação
-│       │   └── db/
-│       │       ├── index.ts          # Configuração do banco (D1)
-│       │       └── schemas/          # Schemas Drizzle
-│       ├── drizzle/         # Migrations SQL
-│       ├── drizzle.config.ts
-│       ├── wrangler.toml    # Configuração do Cloudflare Worker
-│       └── .env.template
+│   └── wallet-api/          # API REST principal (Elysia)
+│       └── src/
+│           └── index.ts     # Entry point da aplicação
+├── packages/
+│   ├── drizzle/             # Configuração do banco, schemas e migrations
+│   │   ├── src/db/
+│   │   │   ├── index.ts     # Configuração do banco (D1)
+│   │   │   ├── schemas/     # Schemas Drizzle
+│   │   │   └── migrations/  # Migrations SQL
+│   │   ├── drizzle.config.ts
+│   │   └── wrangler.toml    # Configuração do Cloudflare D1
+│   └── @types/              # Tipos globais compartilhados
+│       └── src/
+│           ├── index.ts
+│           ├── wallet.types.ts
+│           ├── assets.types.ts
+│           ├── wallet-report.types.ts
+│           └── wallet-report-metadata.types.ts
 ├── .github/
 │   └── pull_request_template.md
 ├── package.json
@@ -78,7 +86,7 @@ pnpm install
 **2. Configurar variáveis de ambiente**
 
 ```bash
-cp apps/wallet-api/.env.template apps/wallet-api/.env
+cp packages/drizzle/.env.template packages/drizzle/.env
 ```
 
 Preencha o arquivo `.env`:
@@ -92,7 +100,7 @@ CLOUDFLARE_D1_TOKEN=<token de acesso>
 **3. Executar migrations**
 
 ```bash
-cd apps/wallet-api
+cd packages/drizzle
 pnpm db:migrate
 ```
 
@@ -106,27 +114,17 @@ pnpm start:dev
 
 O servidor sobe em `http://localhost:3000`.
 
-### Comandos úteis
+### Comandos úteis (packages/drizzle)
 
 ```bash
 pnpm db:generate:migration   # Gerar nova migration a partir dos schemas
 pnpm db:migrate              # Aplicar migrations no banco
 pnpm db:studio               # Abrir Drizzle Studio (UI do banco)
-pnpm start:build             # Build + iniciar em produção
-```
-
-## Deploy
-
-O projeto roda como Cloudflare Worker. Para fazer o deploy:
-
-```bash
-cd apps/wallet-api
-bunx wrangler deploy
 ```
 
 ## Worker de Relatórios (Em desenvolvimento)
 
-Um Cloudflare Worker com cron trigger será implementado para executar diariamente às 10h (BRT). O fluxo:
+Um Cloudflare Worker com cron trigger será implementado separadamente para executar diariamente às 10h (BRT). O fluxo:
 
 1. Busca todas as carteiras e seus ativos cadastrados
 2. Consulta o Perplexity para obter as últimas notícias relevantes para cada conjunto de ativos
